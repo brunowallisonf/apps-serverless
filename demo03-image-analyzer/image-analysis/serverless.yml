@@ -1,0 +1,26 @@
+org: brunowallisof
+app: app2
+service: image-analysis
+
+frameworkVersion: "2 || 3"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - rekognition:DetectLabels
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - translate:TranslateText
+      Resource: "*"
+functions:
+  image-analysis:
+    handler: handler.main
+    events:
+      - http:
+          path: analyse
+          method: get
